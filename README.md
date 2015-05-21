@@ -1,73 +1,45 @@
-# Spree Gateway
+Solidus Gateway
+===============
 
-[![Build Status](https://api.travis-ci.org/spree/spree_gateway.png?branch=master)](https://travis-ci.org/spree/spree_gateway)
-[![Code Climate](https://codeclimate.com/github/spree/spree_gateway.png)](https://codeclimate.com/github/spree/spree_gateway)
-
-Community supported Spree Payment Method Gateways. It works as a wrapper for
+Community supported Solidus Payment Method Gateways. It works as a wrapper for
 active_merchant gateway. Note that for some gateways you might still need to
 add another gem to your Gemfile to make it work. For example active_merchant
 require `braintree` but it doesn't include that gem on its gemspec. So you
 need to manually add it to your rails app Gemfile.
 
-These can be used with Spree >= 1.0.x (but see note below for necessary changes)
-
-http://guides.spreecommerce.com/developer/payments.html
-
-## Installation
+Installation
+------------
 
 In your Gemfile:
 
-**Spree edge**
-
 ```ruby
-gem 'spree'
-gem 'spree_gateway', github: 'spree/spree_gateway', branch: 'master'
-```
-
-**Spree 1.3**
-
-```ruby
-gem 'spree', '~> 1.3'
-gem 'spree_gateway', github: 'spree/spree_gateway', branch: '1-3-stable'
+gem "solidus_gateway"
 ```
 
 Then run from the command line:
 
-    $ bundle install
-    $ rails g spree_gateway:install
+```shell
+bundle install
+rails g spree_gateway:install
+```
 
-Finally, make sure to **restart your app**. Navigate to *Configuration > Payment Methods > New Payment Method* in the admin panel and you should see that a bunch of additional gateways have been added to the list.
+Finally, make sure to **restart your app**. Navigate to *Configuration >
+Payment Methods > New Payment Method* in the admin panel and you should see
+that a bunch of additional gateways have been added to the list.
 
-## Contributing
+Testing
+-------
 
-In the spirit of [free software][1], **everyone** is encouraged to help improve this project.
+Until Solidus is publicly available, the easiest way to satisfy the Solidus
+dependancy is with a local Bundler override:
 
-Here are some ways *you* can contribute:
+```shell
+bundle config local.spree /path/to/local/solidus/repository
+```
 
-* by using prerelease versions
-* by reporting [bugs][2]
-* by suggesting new features
-* by writing or editing documentation
-* by writing specifications
-* by writing code (*no patch is too small*: fix typos, add comments, clean up inconsistent whitespace)
-* by refactoring code
-* by resolving [issues][2]
-* by reviewing patches
+Then just run the following to automatically build a dummy app if necessary and
+run the tests:
 
-Starting point:
-
-* Fork the repo
-* Clone your repo
-* Run `bundle`
-* Run `bundle exec rake test_app` to create the test application in `spec/test_app`
-* Make your changes
-* Ensure specs pass by running `bundle exec rspec spec`
-* Submit your pull request
-
-Copyright (c) 2014 [Spree Commerce][4] and other [contributors][5], released under the [New BSD License][3]
-
-[1]: http://www.fsf.org/licensing/essays/free-sw.html
-[2]: https://github.com/spree/spree_gateway/issues
-[3]: https://github.com/spree/spree_gateway/blob/master/LICENSE.md
-[4]: https://github.com/spree
-[5]: https://github.com/spree/spree_gateway/graphs/contributors
+```shell
+bundle exec rake
+```

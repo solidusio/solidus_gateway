@@ -13,6 +13,7 @@ require 'capybara/poltergeist'
 require 'database_cleaner'
 require 'ffaker'
 require 'rspec/active_model/mocks'
+require 'braintree'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
@@ -37,6 +38,9 @@ RSpec.configure do |config|
   config.before :suite do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with :truncation
+
+    # Don't log Braintree to STDOUT.
+    Braintree::Configuration.logger = Logger.new("spec/dummy/tmp/log")
   end
 
   config.before do

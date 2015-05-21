@@ -1,6 +1,6 @@
 module SpreeGateway
   class Engine < Rails::Engine
-    engine_name 'spree_gateway'
+    engine_name 'solidus_gateway'
 
     config.autoload_paths += %W(#{config.root}/lib)
 
@@ -37,8 +37,8 @@ module SpreeGateway
     def self.activate
       if SpreeGateway::Engine.frontend_available?
         Rails.application.config.assets.precompile += [
-          'lib/assets/javascripts/spree/frontend/spree_gateway.js',
-          'lib/assets/javascripts/spree/frontend/spree_gateway.css',
+          'lib/assets/javascripts/spree/frontend/solidus_gateway.js',
+          'lib/assets/javascripts/spree/frontend/solidus_gateway.css',
         ]
         Dir.glob(File.join(File.dirname(__FILE__), "../../controllers/frontend/*/*_decorator*.rb")) do |c|
           Rails.configuration.cache_classes ? require(c) : load(c)
