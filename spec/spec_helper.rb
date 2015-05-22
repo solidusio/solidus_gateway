@@ -1,36 +1,35 @@
-require 'simplecov'
-SimpleCov.start 'rails'
+require "simplecov"
+SimpleCov.start "rails"
 
-ENV["RAILS_ENV"] = "test"
+ENV["RAILS_ENV"] ||= "test"
 
 require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 
-require 'rspec/rails'
-require 'rspec/active_model/mocks'
-require 'capybara/rspec'
-require 'capybara/rails'
-require 'capybara/poltergeist'
-require 'database_cleaner'
-require 'ffaker'
-require 'rspec/active_model/mocks'
-require 'braintree'
+require "rspec/rails"
+require "rspec/active_model/mocks"
+require "capybara/rspec"
+require "capybara/rails"
+require "capybara/poltergeist"
+require "database_cleaner"
+require "ffaker"
+require "rspec/active_model/mocks"
+require "braintree"
 
-Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+Dir[File.join(File.dirname(__FILE__), "support/**/*.rb")].each { |f| require f }
 
-require 'spree/testing_support/factories'
-require 'spree/testing_support/order_walkthrough'
-require 'spree/testing_support/preferences'
+require "spree/testing_support/factories"
+require "spree/testing_support/order_walkthrough"
+require "spree/testing_support/preferences"
 
 FactoryGirl.find_definitions
 
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.mock_with :rspec
-  config.use_transactional_fixtures = false
-  config.infer_spec_type_from_file_location!
 
-  #config.filter_run focus: true
-  #config.filter_run_excluding slow: true
+  config.filter_run focus: true
+  config.run_all_when_everything_filtered = true
+  config.use_transactional_fixtures = false
 
   config.include FactoryGirl::Syntax::Methods
   config.include Spree::TestingSupport::Preferences

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::BillingIntegration::Skrill::QuickCheckout, focus: true do
+describe Spree::BillingIntegration::Skrill::QuickCheckout do
   let(:quick_checkout) { create(:skrill_quick_checkout) }
 
   context '.provider_class' do
