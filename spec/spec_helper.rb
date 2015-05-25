@@ -7,21 +7,18 @@ require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 
 require "rspec/rails"
 require "rspec/active_model/mocks"
-require "capybara/rspec"
-require "capybara/rails"
-require "capybara/poltergeist"
-require "database_cleaner"
-require "ffaker"
-require "rspec/active_model/mocks"
-require "braintree"
 
-Dir[File.join(File.dirname(__FILE__), "support/**/*.rb")].each { |f| require f }
+require "capybara/rspec"
+require 'capybara/poltergeist'
+
+require "database_cleaner"
+require "braintree"
+require "ffaker"
 
 require "spree/testing_support/factories"
 require "spree/testing_support/order_walkthrough"
-require "spree/testing_support/preferences"
 
-FactoryGirl.find_definitions
+Dir[File.join(File.dirname(__FILE__), "support/**/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
@@ -32,12 +29,8 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
 
   config.include FactoryGirl::Syntax::Methods
-  config.include Spree::TestingSupport::Preferences
 
   config.before :suite do
-    DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.clean_with :truncation
-
     # Don't log Braintree to STDOUT.
     Braintree::Configuration.logger = Logger.new("spec/dummy/tmp/log")
   end
@@ -45,7 +38,6 @@ RSpec.configure do |config|
   config.before do
     DatabaseCleaner.strategy = RSpec.current_example.metadata[:js] ? :truncation : :transaction
     DatabaseCleaner.start
-    reset_spree_preferences
   end
 
   config.after do
@@ -53,4 +45,5 @@ RSpec.configure do |config|
   end
 
   Capybara.javascript_driver = :poltergeist
+  FactoryGirl.find_definitions
 end
