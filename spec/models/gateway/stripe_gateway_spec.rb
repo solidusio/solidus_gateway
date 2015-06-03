@@ -164,8 +164,11 @@ describe Spree::Gateway::StripeGateway do
     let(:order) { Spree::Order.create }
 
     let(:card) do
-      mock_model(Spree::CreditCard, :gateway_customer_profile_id => 'cus_abcde',
-                                    :imported => false)
+      FactoryGirl.create(
+        :credit_card,
+        gateway_customer_profile_id: 'cus_abcde',
+        imported: false
+      )
     end
 
     let(:payment) do
