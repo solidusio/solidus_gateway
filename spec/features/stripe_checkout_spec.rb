@@ -21,15 +21,15 @@ RSpec.describe "Stripe checkout", type: :feature do
     user = FactoryGirl.create(:user)
 
     order = OrderWalkthrough.up_to(:delivery)
-    order.stub :confirmation_required? => true
+    allow(order).to receive_messages :confirmation_required? => true
 
     order.reload
     order.user = user
     order.update!
 
-    Spree::CheckoutController.any_instance.stub(current_order: order)
-    Spree::CheckoutController.any_instance.stub(try_spree_current_user: user)
-    Spree::CheckoutController.any_instance.stub(:skip_state_validation? => true)
+    allow_any_instance_of(Spree::CheckoutController).to receive_messages(current_order: order)
+    allow_any_instance_of(Spree::CheckoutController).to receive_messages(try_spree_current_user: user)
+    allow_any_instance_of(Spree::CheckoutController).to receive_messages(:skip_state_validation? => true)
 
     visit spree.checkout_state_path(:payment)
   end
@@ -40,9 +40,9 @@ RSpec.describe "Stripe checkout", type: :feature do
     fill_in "Card Code", with: "123"
     fill_in "Expiration", with: "01 / #{Time.now.year + 1}"
     click_button "Save and Continue"
-    page.current_url.should include("/checkout/confirm")
+    expect(page.current_url).to include("/checkout/confirm")
     click_button "Place Order"
-    page.should have_content("Your order has been processed successfully")
+    expect(page).to have_content("Your order has been processed successfully")
   end
 
   # This will fetch a token from Stripe.com and then pass that to the webserver.
@@ -55,21 +55,21 @@ RSpec.describe "Stripe checkout", type: :feature do
     fill_in "Expiration", with: "01 / #{Time.now.year + 1}"
     click_button "Save and Continue"
     sleep(5) # Wait for Stripe API to return + form to submit
-    page.current_url.should include("/checkout/confirm")
+    expect(page.current_url).to include("/checkout/confirm")
     click_button "Place Order"
-    page.should have_content("Your order has been processed successfully")
+    expect(page).to have_content("Your order has been processed successfully")
   end
 
   it "shows an error with an invalid credit card number", js: true do
     click_button "Save and Continue"
-    page.should have_content("This card number looks invalid")
+    expect(page).to have_content("This card number looks invalid")
   end
 
   it "shows an error with invalid security fields", js: true do
     fill_in "Card Number", with: "4242 4242 4242 4242"
     fill_in "Expiration", with: "01 / #{Time.now.year + 1}"
     click_button "Save and Continue"
-    page.should have_content("Your card's security code is invalid.")
+    expect(page).to have_content("Your card's security code is invalid.")
   end
 
   it "shows an error with invalid expiry fields", js: true do
@@ -77,6 +77,6 @@ RSpec.describe "Stripe checkout", type: :feature do
     fill_in "Expiration", with: "00 / #{Time.now.year + 1}"
     fill_in "Card Code", with: "123"
     click_button "Save and Continue"
-    page.should have_content("Your card's expiration month is invalid.")
+    expect(page).to have_content("Your card's expiration month is invalid.")
   end
 end

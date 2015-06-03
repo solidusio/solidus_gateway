@@ -9,7 +9,7 @@ describe Spree::Gateway::Linkpoint do
   let(:options) { { subtotal: 3, discount: -1 } }
 
   before do
-    gateway.provider_class.stub(new: provider)
+    allow(gateway.provider_class).to receive_messages(new: provider)
   end
 
   context '.provider_class' do
@@ -20,7 +20,7 @@ describe Spree::Gateway::Linkpoint do
 
   context '#authorize' do
     it 'adds the discount to the subtotal' do
-      provider.should_receive(:authorize)
+      expect(provider).to receive(:authorize)
         .with(money, credit_card, subtotal: 2, discount: 0)
       gateway.authorize(money, credit_card, options)
     end
@@ -28,7 +28,7 @@ describe Spree::Gateway::Linkpoint do
 
   context '#purchase' do
     it 'adds the discount to the subtotal' do
-      provider.should_receive(:purchase)
+      expect(provider).to receive(:purchase)
         .with(money, credit_card, subtotal: 2, discount: 0)
       gateway.purchase(money, credit_card, options)
     end
@@ -38,7 +38,7 @@ describe Spree::Gateway::Linkpoint do
     let(:authorization) { double('authorization') }
 
     it 'adds the discount to the subtotal' do
-      provider.should_receive(:capture)
+      expect(provider).to receive(:capture)
         .with(money, authorization, subtotal: 2, discount: 0)
       gateway.capture(money, authorization, options)
     end
@@ -46,7 +46,7 @@ describe Spree::Gateway::Linkpoint do
 
   context '#void' do
     it 'adds the discount to the subtotal' do
-      provider.should_receive(:void)
+      expect(provider).to receive(:void)
         .with(identification, subtotal: 2, discount: 0)
       gateway.void(identification, options)
     end
@@ -54,7 +54,7 @@ describe Spree::Gateway::Linkpoint do
 
   context '#credit' do
     it 'adds the discount to the subtotal' do
-      provider.should_receive(:credit)
+      expect(provider).to receive(:credit)
         .with(money, identification, subtotal: 2, discount: 0)
       gateway.credit(money, identification, options)
     end
