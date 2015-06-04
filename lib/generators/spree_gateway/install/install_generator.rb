@@ -4,7 +4,7 @@ module SpreeGateway
       class_option :auto_run_migrations, type: :boolean, default: false
 
       def add_migrations
-        run 'bundle exec rake railties:install:migrations FROM=spree_gateway'
+        run 'bundle exec rake railties:install:migrations FROM=solidus_gateway'
       end
 
       def run_migrations

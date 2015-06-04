@@ -1,5 +1,9 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-gem 'spree', github: 'spree/spree', branch: '2-4-stable'
+gem "solidus", git: "git@github.com:solidusio/solidus.git", branch: "master"
+
+group :development, :test do
+  gem "pry-rails"
+end
 
 gemspec
