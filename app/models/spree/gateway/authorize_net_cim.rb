@@ -5,10 +5,6 @@ module Spree
     preference :test_mode, :boolean, :default => false
     preference :validate_on_profile_create, :boolean, :default => false
 
-    ActiveMerchant::Billing::Response.class_eval do
-      attr_writer :authorization
-    end
-
     def provider_class
       self.class
     end
