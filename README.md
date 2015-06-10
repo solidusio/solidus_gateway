@@ -20,7 +20,7 @@ Then run from the command line:
 
 ```shell
 bundle install
-rails g spree_gateway:install
+rails g solidus_gateway:install
 ```
 
 Finally, make sure to **restart your app**. Navigate to *Configuration >
