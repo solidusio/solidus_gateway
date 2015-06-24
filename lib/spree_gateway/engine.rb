@@ -17,7 +17,6 @@ module SpreeGateway
         app.config.spree.payment_methods << Spree::Gateway::Beanstream
         app.config.spree.payment_methods << Spree::Gateway::BraintreeGateway
         app.config.spree.payment_methods << Spree::Gateway::StripeGateway
-        app.config.spree.payment_methods << Spree::Gateway::Samurai
         app.config.spree.payment_methods << Spree::Gateway::Worldpay
         app.config.spree.payment_methods << Spree::Gateway::Banwire
         app.config.spree.payment_methods << Spree::Gateway::UsaEpay
