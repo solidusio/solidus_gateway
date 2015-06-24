@@ -112,8 +112,8 @@ describe Spree::Gateway::BraintreeGateway do
       )
       @address = address
 
-      order = create(:order_with_totals, bill_address: address, ship_address: address)
-      order.update!
+      @order = create(:order_with_totals, bill_address: address, ship_address: address)
+      @order.update!
 
       @credit_card = create(:credit_card,
         verification_value: '123',
@@ -125,7 +125,7 @@ describe Spree::Gateway::BraintreeGateway do
     end
 
     it 'should fail creation' do
-      expect{ create(:payment, source: @credit_card, order: order, payment_method: @gateway, amount: 10.00) }.to raise_error
+      expect{ create(:payment, source: @credit_card, order: @order, payment_method: @gateway, amount: 10.00) }.to raise_error Spree::Core::GatewayError
     end
 
   end
