@@ -30,6 +30,8 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 
   config.before :suite do
+    DatabaseCleaner.clean_with :truncation
+
     # Don't log Braintree to STDOUT.
     Braintree::Configuration.logger = Logger.new("spec/dummy/tmp/log")
   end

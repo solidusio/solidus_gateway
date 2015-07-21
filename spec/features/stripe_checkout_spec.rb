@@ -1,48 +1,44 @@
 require 'spec_helper'
 
 RSpec.describe "Stripe checkout", type: :feature do
-  let!(:country) { FactoryGirl.create(:country, states_required: true) }
-  let!(:state) { FactoryGirl.create(:state, country: country) }
-  let!(:shipping_method) { FactoryGirl.create(:shipping_method) }
-  let!(:stock_location) { FactoryGirl.create(:stock_location) }
-  let!(:mug) { FactoryGirl.create(:product, name: "RoR Mug") }
-  let!(:stripe_payment_method) do
+  before do
+    # Set up a zone
+    zone = FactoryGirl.create(:zone)
+    country = FactoryGirl.create(:country)
+    zone.members << Spree::ZoneMember.create!(zoneable: country)
+    FactoryGirl.create(:free_shipping_method)
+
     Spree::Gateway::StripeGateway.create!(
       name: "Stripe",
       preferred_secret_key: "sk_test_VCZnDv3GLU15TRvn8i2EsaAN",
       preferred_publishable_key: "pk_test_Cuf0PNtiAkkMpTVC2gwYDMIg",
       environment: "test"
     )
-  end
 
-  let!(:zone) { FactoryGirl.create(:zone) }
+    FactoryGirl.create(:product, name: "DL-44")
 
-  before do
-    user = FactoryGirl.create(:user)
+    visit spree.root_path
+    click_link "DL-44"
+    click_button "Add To Cart"
 
-    order = OrderWalkthrough.up_to(:delivery)
-    allow(order).to receive_messages :confirmation_required? => true
+    click_button "Checkout"
 
-    order.reload
-    order.user = user
-    order.update!
+    # Address
+    fill_in "Customer E-Mail", with: "han@example.com"
+    within("#billing") do
+      fill_in "First Name", with: "Han"
+      fill_in "Last Name", with: "Solo"
+      fill_in "Street Address", with: "YT-1300"
+      fill_in "City", with: "Mos Eisley"
+      select "United States of America", from: "Country"
+      select country.states.first, from: "order_bill_address_attributes_state_id"
+      fill_in "Zip", with: "12010"
+      fill_in "Phone", with: "(555) 555-5555"
+    end
+    click_on "Save and Continue"
 
-    allow_any_instance_of(Spree::CheckoutController).to receive_messages(current_order: order)
-    allow_any_instance_of(Spree::CheckoutController).to receive_messages(try_spree_current_user: user)
-    allow_any_instance_of(Spree::CheckoutController).to receive_messages(:skip_state_validation? => true)
-
-    visit spree.checkout_state_path(:payment)
-  end
-
-  # This will pass the CC data to the server and the StripeGateway class handles it
-  it "can process a valid payment (without JS)" do
-    fill_in "Card Number", with: "4242 4242 4242 4242"
-    fill_in "Card Code", with: "123"
-    fill_in "Expiration", with: "01 / #{Time.now.year + 1}"
-    click_button "Save and Continue"
-    expect(page.current_url).to include("/checkout/confirm")
-    click_button "Place Order"
-    expect(page).to have_content("Your order has been processed successfully")
+    # Delivery
+    click_on "Save and Continue"
   end
 
   # This will fetch a token from Stripe.com and then pass that to the webserver.
