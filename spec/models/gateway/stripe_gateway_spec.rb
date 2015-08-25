@@ -153,7 +153,7 @@ describe Spree::Gateway::StripeGateway do
 
   context 'capture with payment class' do
     let(:gateway) do
-      gateway = described_class.new(:environment => 'test', :active => true)
+      gateway = described_class.new(:active => true)
       gateway.set_preference :secret_key, secret_key
       allow(gateway).to receive(:options_for_purchase_or_auth).and_return(['money','cc','opts'])
       allow(gateway).to receive(:provider).and_return provider

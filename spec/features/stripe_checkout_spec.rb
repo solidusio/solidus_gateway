@@ -12,7 +12,6 @@ RSpec.describe "Stripe checkout", type: :feature do
       name: "Stripe",
       preferred_secret_key: "sk_test_VCZnDv3GLU15TRvn8i2EsaAN",
       preferred_publishable_key: "pk_test_Cuf0PNtiAkkMpTVC2gwYDMIg",
-      environment: "test"
     )
 
     FactoryGirl.create(:product, name: "DL-44")
