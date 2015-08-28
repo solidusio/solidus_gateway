@@ -7,3 +7,5 @@ spec/dummy
 Gemfile.lock
 .rvmrc
 coverage
+.ruby-version
+pkg
