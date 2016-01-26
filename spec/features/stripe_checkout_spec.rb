@@ -58,7 +58,7 @@ RSpec.describe "Stripe checkout", type: :feature do
 
   it "shows an error with an invalid credit card number", js: true do
     click_button "Save and Continue"
-    expect(page).to have_content("This card number looks invalid")
+    expect(page).to have_content("The card number is not a valid credit card number.")
   end
 
   it "shows an error with invalid security fields", js: true do
