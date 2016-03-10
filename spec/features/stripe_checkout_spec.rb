@@ -2,6 +2,7 @@ require 'spec_helper'
 
 RSpec.describe "Stripe checkout", type: :feature do
   before do
+    FactoryGirl.create(:store)
     # Set up a zone
     zone = FactoryGirl.create(:zone)
     country = FactoryGirl.create(:country)

@@ -161,7 +161,8 @@ describe Spree::Gateway::StripeGateway do
       gateway
     end
 
-    let(:order) { Spree::Order.create }
+    let!(:store) { FactoryGirl.create(:store) }
+    let(:order) { Spree::Order.create! }
 
     let(:card) do
       FactoryGirl.create(
