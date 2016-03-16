@@ -1,6 +1,8 @@
 machine:
   ruby:
     version: 2.1.5
+  pre:
+    - sudo curl --output /usr/local/bin/phantomjs https://s3.amazonaws.com/circle-downloads/phantomjs-2.1.1
 test:
   pre:
     - bundle exec rake test_app

@@ -28,6 +28,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "coffee-rails"
   s.add_development_dependency "factory_girl", "~> 4.4"
   s.add_development_dependency "capybara"
-  s.add_development_dependency "poltergeist", "~> 1.5.0"
+  s.add_development_dependency "poltergeist", "~> 1.9"
   s.add_development_dependency "database_cleaner", "1.2.0"
 end
