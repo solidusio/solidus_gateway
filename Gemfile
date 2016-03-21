@@ -6,4 +6,7 @@ group :development, :test do
   gem "pry-rails"
 end
 
+gem 'pg'
+gem 'mysql2'
+
 gemspec
