@@ -22,7 +22,7 @@ module Spree
 
     def provider
       provider_instance = super
-      Braintree::Configuration.custom_user_agent = "Spree #{Spree.version}"
+      Braintree::Configuration.custom_user_agent = "solidus_gateway #{SolidusGateway::VERSION}"
       Braintree::Configuration.environment = preferred_environment.to_sym
       Braintree::Configuration.merchant_id = preferred_merchant_id
       Braintree::Configuration.public_key = preferred_public_key
