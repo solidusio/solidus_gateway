@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.requirements << "none"
 
   s.add_dependency "solidus_core", "~> 1.1"
+  s.add_dependency "activemerchant", "~> 1.48.0"
 
   s.add_development_dependency "braintree", "~> 2.0"
   s.add_development_dependency "rspec-rails", "~> 3.2"
