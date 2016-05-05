@@ -33,6 +33,15 @@ module SpreeGateway
         app.config.spree.payment_methods << Spree::Gateway::SpreedlyCoreGateway
     end
 
+    # The application_id is a class attribute on all gateways and is used to
+    # identify the "source" of the transaction. Braintree has asked us to
+    # provide this value to attribute transactions to Solidus; we do not set
+    # it on all gateways or the base gateway as other gateways' behavior with
+    # the value may differ.
+    initializer "spree.gateway.braintree_gateway.application_id" do |app|
+      ActiveMerchant::Billing::BraintreeBlueGateway.application_id = "Solidus"
+    end
+
     def self.activate
       if SpreeGateway::Engine.frontend_available?
         Rails.application.config.assets.precompile += [
