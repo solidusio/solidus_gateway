@@ -9,6 +9,10 @@ require "rspec/rails"
 
 require "capybara/rspec"
 require 'capybara/poltergeist'
+Capybara.register_driver(:poltergeist) do |app|
+  Capybara::Poltergeist::Driver.new app, timeout: 90
+end
+Capybara.javascript_driver = :poltergeist
 
 require "database_cleaner"
 require "braintree"
@@ -45,6 +49,5 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
-  Capybara.javascript_driver = :poltergeist
   FactoryGirl.find_definitions
 end
