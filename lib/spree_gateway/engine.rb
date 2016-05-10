@@ -39,7 +39,11 @@ module SpreeGateway
     # it on all gateways or the base gateway as other gateways' behavior with
     # the value may differ.
     initializer "spree.gateway.braintree_gateway.application_id" do |app|
-      ActiveMerchant::Billing::BraintreeBlueGateway.application_id = "Solidus"
+      # NOTE: if the braintree gem is not loaded, calling ActiveMerchant::Billing::BraintreeBlueGateway crashes
+      # therefore, check here to see if Braintree exists before trying to call it
+      if defined?(Braintree) 
+        ActiveMerchant::Billing::BraintreeBlueGateway.application_id = "Solidus"
+      end
     end
 
     def self.activate
