@@ -56,9 +56,23 @@ RSpec.describe "Stripe checkout", type: :feature do
     expect(page).to have_content("Your order has been processed successfully")
   end
 
-  it "shows an error with an invalid credit card number", js: true do
+  it "shows an error with a missing credit card number", js: true do
+    fill_in "Expiration", with: "01 / #{Time.now.year + 1}"
     click_button "Save and Continue"
-    expect(page).to have_content("The card number is not a valid credit card number.")
+    expect(page).to have_content("Could not find payment information")
+  end
+
+  it "shows an error with a missing expiration date", js: true do
+    fill_in "Card Number", with: "4242 4242 4242 4242"
+    click_button "Save and Continue"
+    expect(page).to have_content("Your card's expiration year is invalid.")
+  end
+
+  it "shows an error with an invalid credit card number", js: true do
+    fill_in "Card Number", with: "1111 1111 1111 1111"
+    fill_in "Expiration", with: "01 / #{Time.now.year + 1}"
+    click_button "Save and Continue"
+    expect(page).to have_content("Your card number is incorrect.")
   end
 
   it "shows an error with invalid security fields", js: true do
