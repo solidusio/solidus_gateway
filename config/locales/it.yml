@@ -1,30 +1,30 @@
 ---
 it:
   spree:
-    payment_has_been_cancelled: The payment has been cancelled.
-    complete_skrill_checkout: Please complete Skrill checkout before continuing
+    payment_has_been_cancelled: Il pagamento è stato cancellato.
+    complete_skrill_checkout: Ti preghiamo di completate il checkout Skrill prima di continuare
     skrill: Skrill
-    skrill_transaction: Transaction
-    skrill_customer_id: Customer ID
-    skrill_transaction_id: Transaction ID
-    skrill_payment_type: Payment Type
-    skrill_payment_currency: Payment Currency
+    skrill_transaction: Transazione
+    skrill_customer_id: ID cliente
+    skrill_transaction_id: ID Transazione
+    skrill_payment_type: Tipo di pagamento
+    skrill_payment_currency: Valuta pagamento
     log_entry:
       braintree:
         message: Message
         status: Status
-        cc_token: Braintree Credit Card Token
-        customer_id: Braintree Customer ID
-        cvv_result: CVV Result
-        avs_result_title: AVS result
+        cc_token: Token carta di credito Braintree
+        customer_id: ID cliente Braintree
+        cvv_result: Risultato CVV
+        avs_result_title: Risultato AVS
         avs_result:
-          message: Message
-          street_match: Street Match
-          postal_match: Postal Match
+          message: Messaggio
+          street_match: Match indirizzo
+          postal_match: Match CAP
       stripe:
         message: Message
-        charge_id: Stripe Charge ID
-        card_id: Stripe Card ID
-        cvv_result: CVV Result
-        cvc_check: CVC Check
-        address_zip_check: Address ZIP check
+        charge_id: ID addebito Stripe
+        card_id: ID carta Stripe
+        cvv_result: Risultato CVV
+        cvc_check: Controllo CVC
+        address_zip_check: Controllo CAP
