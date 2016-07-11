@@ -25,10 +25,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency "solidus_core", "~> 1.1"
 
-  # ActiveMerchant v1.58 through at least v1.59 has this bug:
-  # https://github.com/activemerchant/active_merchant/pull/2098
-  s.add_dependency "activemerchant", ">= 1.48.0", "< 1.58.0"
-
   s.add_development_dependency "braintree", "~> 2.0"
   s.add_development_dependency "rspec-rails", "~> 3.2"
   s.add_development_dependency "simplecov"
