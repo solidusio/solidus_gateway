@@ -25,9 +25,11 @@ Gem::Specification.new do |s|
 
   s.add_dependency "solidus_core", "~> 1.1"
 
-  # ActiveMerchant v1.58 through at least v1.59 has this bug:
-  # https://github.com/activemerchant/active_merchant/pull/2098
-  s.add_dependency "activemerchant", ">= 1.48.0", "< 1.58.0"
+  # ActiveMerchant v1.58 through v1.59 introduced a breaking change
+  # to the stripe gateway.
+  #
+  # This was resolved in v1.60, but we still need to skip 1.58 & 1.59.
+  s.add_dependency "activemerchant", "~> 1.48", "!= 1.58.0", "!= 1.59.0"
 
   s.add_development_dependency "braintree", "~> 2.0"
   s.add_development_dependency "rspec-rails", "~> 3.2"
