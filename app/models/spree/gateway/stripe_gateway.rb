@@ -85,16 +85,24 @@ module Spree
       options[:description] = "Spree Order ID: #{gateway_options[:order_id]}"
       options[:currency] = gateway_options[:currency]
 
-      if customer = creditcard.gateway_customer_profile_id
-        options[:customer] = customer
+      customer      = creditcard.gateway_customer_profile_id
+      if token_or_card = creditcard.gateway_payment_profile_id
+        if token_or_card =~ /^\w*tok_/
+          token = token_or_card
+        else
+          card = token_or_card
+        end
       end
-      if token_or_card_id = creditcard.gateway_payment_profile_id
-        # The Stripe ActiveMerchant gateway supports passing the token directly as the creditcard parameter
-        # The Stripe ActiveMerchant gateway supports passing the customer_id and credit_card id
-        # https://github.com/Shopify/active_merchant/issues/770
-        creditcard = token_or_card_id
+
+      payment_object = if token
+        token
+      elsif card
+        "#{customer}|#{card}"
+      else
+        creditcard
       end
-      return money, creditcard, options
+
+      return money, payment_object, options
     end
 
     def address_for(payment)
