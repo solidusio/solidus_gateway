@@ -3,6 +3,8 @@ cache: bundler
 language: ruby
 rvm:
   - 2.3.1
+before_script:
+  - ruby -rnet/http -e "Net::HTTP.get_print URI('https://www.howsmyssl.com/a/check')"
 env:
   matrix:
     - SOLIDUS_BRANCH=v1.1 DB=postgres
