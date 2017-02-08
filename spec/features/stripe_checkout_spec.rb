@@ -21,9 +21,11 @@ RSpec.describe "Stripe checkout", type: :feature do
     click_link "DL-44"
     click_button "Add To Cart"
 
+    expect(page).to have_current_path("/cart")
     click_button "Checkout"
 
     # Address
+    expect(page).to have_current_path("/checkout/address")
     fill_in "Customer E-Mail", with: "han@example.com"
     within("#billing") do
       fill_in "First Name", with: "Han"
@@ -38,6 +40,7 @@ RSpec.describe "Stripe checkout", type: :feature do
     click_on "Save and Continue"
 
     # Delivery
+    expect(page).to have_current_path("/checkout/delivery")
     click_on "Save and Continue"
   end
 
