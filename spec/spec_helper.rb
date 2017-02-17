@@ -16,6 +16,15 @@ end
 Capybara.javascript_driver = :poltergeist
 Capybara.default_max_wait_time = 10
 
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(
+    app,
+    js_errors: true,
+    phantomjs_options: ['--ignore-ssl-errors=yes', '--ssl-protocol=any']
+  )
+end
+Capybara.javascript_driver = :poltergeist
+
 require "database_cleaner"
 require "braintree"
 require "ffaker"
