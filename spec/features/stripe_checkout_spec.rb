@@ -81,6 +81,7 @@ RSpec.describe "Stripe checkout", type: :feature do
   it "shows an error with invalid security fields", js: true do
     fill_in "Card Number", with: "4242 4242 4242 4242"
     fill_in "Expiration", with: "01 / #{Time.now.year + 1}"
+    fill_in "Card Code", with: "12"
     click_button "Save and Continue"
     expect(page).to have_content("Your card's security code is invalid.")
   end
