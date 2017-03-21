@@ -4,14 +4,19 @@ module Spree
     preference :password, :string
     preference :test_mode, :boolean, :default => false
     preference :validate_on_profile_create, :boolean, :default => false
+    preference :server, :string, :default => "test"
 
     def provider_class
       self.class
     end
 
     def options
+      raise "You must set the 'server' preference in your payment method (Gateway::AuthorizeNetCim) to either 'live' or 'test'" if !['live','test'].include?(self.preferred_server)
+
       # add :test key in the options hash, as that is what the ActiveMerchant::Billing::AuthorizeNetGateway expects
-      if self.preferred_test_mode
+      # warning: when passed to the gateway code, :test indicates live/test server; it DOES NOT indicate authorize.net test-mode
+
+      if self.preferred_server != "live"
         self.preferences[:test] = true
       else
         self.preferences.delete(:test)
