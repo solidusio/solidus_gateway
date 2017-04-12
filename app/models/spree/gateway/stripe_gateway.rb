@@ -85,6 +85,10 @@ module Spree
       options[:description] = "Spree Order ID: #{gateway_options[:order_id]}"
       options[:currency] = gateway_options[:currency]
 
+      # The Stripe ActiveMerchant gateway accepts a key named statement_description to set statement_descriptor
+      # The maximum length of the statement descriptor is 22 characters.
+      options[:statement_description] = options[:description][0..21]
+
       if customer = creditcard.gateway_customer_profile_id
         options[:customer] = customer
       end
