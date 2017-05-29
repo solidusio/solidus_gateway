@@ -65,7 +65,7 @@
   });
 </script>
 
-<%- if @order.has_checkout_step?('address') -%>
+<%- if @order.has_checkout_step?('address') && @order.bill_address.present?-%>
   <script>
     Spree.stripeAdditionalInfo = {
       name: "<%= @order.bill_address.full_name %>",
