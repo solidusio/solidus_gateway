@@ -4,6 +4,8 @@ cache: bundler
 language: ruby
 rvm:
   - 2.3.1
+before_install:
+  - mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'travis'@'%';"
 env:
   matrix:
     - SOLIDUS_BRANCH=v1.1 DB=postgres

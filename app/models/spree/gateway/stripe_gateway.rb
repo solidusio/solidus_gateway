@@ -9,8 +9,14 @@ module Spree
       'Visa' => 'visa'
     }
 
-    def method_type
-      'stripe'
+    if SolidusSupport.solidus_gem_version < Gem::Version.new('2.3.x')
+      def method_type
+        'stripe'
+      end
+    else
+      def partial_name
+        'stripe'
+      end
     end
 
     def provider_class
