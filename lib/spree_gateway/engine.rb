@@ -20,7 +20,6 @@ module SpreeGateway
         app.config.spree.payment_methods << Spree::Gateway::Worldpay
         app.config.spree.payment_methods << Spree::Gateway::Banwire
         app.config.spree.payment_methods << Spree::Gateway::UsaEpay
-        app.config.spree.payment_methods << Spree::BillingIntegration::Skrill::QuickCheckout
         app.config.spree.payment_methods << Spree::Gateway::BalancedGateway
         app.config.spree.payment_methods << Spree::Gateway::DataCash
         app.config.spree.payment_methods << Spree::Gateway::UsaEpay
@@ -52,9 +51,6 @@ module SpreeGateway
           'lib/assets/javascripts/spree/frontend/solidus_gateway.js',
           'lib/assets/javascripts/spree/frontend/solidus_gateway.css',
         ]
-        Dir.glob(File.join(File.dirname(__FILE__), "../../controllers/frontend/*/*_decorator*.rb")) do |c|
-          Rails.configuration.cache_classes ? require(c) : load(c)
-        end
       end
     end
 
@@ -71,7 +67,6 @@ module SpreeGateway
     end
 
     if self.frontend_available?
-      paths["app/controllers"] << "lib/controllers/frontend"
       paths["app/views"] << "lib/views/frontend"
     end
 
