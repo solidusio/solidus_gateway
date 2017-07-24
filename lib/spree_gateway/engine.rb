@@ -43,19 +43,11 @@ module SpreeGateway
       end
     end
 
-    def self.backend_available?
-      @@backend_available ||= ::Rails::Engine.subclasses.map(&:instance).map{ |e| e.class.to_s }.include?('Spree::Backend::Engine')
-    end
-
-    def self.frontend_available?
-      @@frontend_available ||= ::Rails::Engine.subclasses.map(&:instance).map{ |e| e.class.to_s }.include?('Spree::Frontend::Engine')
-    end
-
-    if self.backend_available?
+    if SolidusSupport.backend_available?
       paths["app/views"] << "lib/views/backend"
     end
 
-    if self.frontend_available?
+    if SolidusSupport.frontend_available?
       paths["app/views"] << "lib/views/frontend"
     end
   end
