@@ -45,15 +45,6 @@ module SpreeGateway
       end
     end
 
-    def self.activate
-      if SpreeGateway::Engine.frontend_available?
-        Rails.application.config.assets.precompile += [
-          'lib/assets/javascripts/spree/frontend/solidus_gateway.js',
-          'lib/assets/javascripts/spree/frontend/solidus_gateway.css',
-        ]
-      end
-    end
-
     def self.backend_available?
       @@backend_available ||= ::Rails::Engine.subclasses.map(&:instance).map{ |e| e.class.to_s }.include?('Spree::Backend::Engine')
     end
@@ -69,7 +60,5 @@ module SpreeGateway
     if self.frontend_available?
       paths["app/views"] << "lib/views/frontend"
     end
-
-    config.to_prepare &method(:activate).to_proc
   end
 end
