@@ -41,7 +41,10 @@ RSpec.describe "Stripe checkout", type: :feature do
 
     # Delivery
     expect(page).to have_current_path("/checkout/delivery")
+    expect(page).to have_content("UPS Ground")
     click_on "Save and Continue"
+
+    expect(page).to have_current_path("/checkout/payment")
   end
 
   # This will fetch a token from Stripe.com and then pass that to the webserver.
