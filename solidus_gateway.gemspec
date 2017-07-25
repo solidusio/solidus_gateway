@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.requirements << "none"
 
   s.add_dependency "solidus_core", [">= 1.1", "< 3"]
-  s.add_dependency "solidus_support"
+  s.add_dependency "solidus_support", ">= 0.1.2"
 
   # ActiveMerchant v1.58 through v1.59 introduced a breaking change
   # to the stripe gateway.

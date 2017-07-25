@@ -2,8 +2,6 @@ module SpreeGateway
   class Engine < Rails::Engine
     engine_name 'solidus_gateway'
 
-    config.autoload_paths += %W(#{config.root}/lib)
-
     initializer "spree.gateway.payment_methods", :after => "spree.register.payment_methods" do |app|
         app.config.spree.payment_methods << Spree::Gateway::AuthorizeNetCim
         app.config.spree.payment_methods << Spree::Gateway::AuthorizeNet
@@ -40,36 +38,17 @@ module SpreeGateway
     initializer "spree.gateway.braintree_gateway.application_id" do |app|
       # NOTE: if the braintree gem is not loaded, calling ActiveMerchant::Billing::BraintreeBlueGateway crashes
       # therefore, check here to see if Braintree exists before trying to call it
-      if defined?(Braintree) 
+      if defined?(Braintree)
         ActiveMerchant::Billing::BraintreeBlueGateway.application_id = "Solidus"
       end
     end
 
-    def self.activate
-      if SpreeGateway::Engine.frontend_available?
-        Rails.application.config.assets.precompile += [
-          'lib/assets/javascripts/spree/frontend/solidus_gateway.js',
-          'lib/assets/javascripts/spree/frontend/solidus_gateway.css',
-        ]
-      end
-    end
-
-    def self.backend_available?
-      @@backend_available ||= ::Rails::Engine.subclasses.map(&:instance).map{ |e| e.class.to_s }.include?('Spree::Backend::Engine')
-    end
-
-    def self.frontend_available?
-      @@frontend_available ||= ::Rails::Engine.subclasses.map(&:instance).map{ |e| e.class.to_s }.include?('Spree::Frontend::Engine')
-    end
-
-    if self.backend_available?
+    if SolidusSupport.backend_available?
       paths["app/views"] << "lib/views/backend"
     end
 
-    if self.frontend_available?
+    if SolidusSupport.frontend_available?
       paths["app/views"] << "lib/views/frontend"
     end
-
-    config.to_prepare &method(:activate).to_proc
   end
 end
