@@ -8,8 +8,8 @@ require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 require "rspec/rails"
 
 require "capybara/rspec"
-require 'capybara-screenshot/rspec'
-require 'capybara/poltergeist'
+require "capybara-screenshot/rspec"
+require "capybara/poltergeist"
 Capybara.register_driver(:poltergeist) do |app|
   Capybara::Poltergeist::Driver.new app, timeout: 90
 end
@@ -20,8 +20,10 @@ require "database_cleaner"
 require "braintree"
 require "ffaker"
 
+require "spree/testing_support/authorization_helpers"
 require "spree/testing_support/factories"
 require "spree/testing_support/order_walkthrough"
+require "spree/testing_support/capybara_ext"
 
 Dir[File.join(File.dirname(__FILE__), "support/**/*.rb")].each { |f| require f }
 
@@ -45,6 +47,7 @@ RSpec.configure do |config|
   config.before do
     DatabaseCleaner.strategy = RSpec.current_example.metadata[:js] ? :truncation : :transaction
     DatabaseCleaner.start
+    Spree::Config.set(auto_capture: false)
   end
 
   config.after do
