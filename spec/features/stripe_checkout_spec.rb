@@ -49,15 +49,12 @@ RSpec.describe "Stripe checkout", type: :feature do
 
   # This will fetch a token from Stripe.com and then pass that to the webserver.
   # The server then processes the payment using that token.
-  it "can process a valid payment (with JS)", js: true do
+  it "can process a valid payment", js: true do
     fill_in "Card Number", with: "4242 4242 4242 4242"
-    # Otherwise ccType field does not get updated correctly
-    page.execute_script("$('.cardNumber').trigger('change')")
     fill_in "Card Code", with: "123"
     fill_in "Expiration", with: "01 / #{Time.now.year + 1}"
     click_button "Save and Continue"
-    sleep(5) # Wait for Stripe API to return + form to submit
-    expect(page.current_url).to include("/checkout/confirm")
+    expect(page).to have_current_path("/checkout/confirm")
     click_button "Place Order"
     expect(page).to have_content("Your order has been processed successfully")
   end
