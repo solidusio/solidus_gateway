@@ -27,6 +27,7 @@ module SpreeGateway
         app.config.spree.payment_methods << Spree::Gateway::Maxipago
         app.config.spree.payment_methods << Spree::Gateway::Migs
         app.config.spree.payment_methods << Spree::Gateway::SpreedlyCoreGateway
+        app.config.spree.payment_methods << Spree::Gateway::CulqiGateway
     end
 
     # The application_id is a class attribute on all gateways and is used to
