@@ -28,7 +28,9 @@ module SpreeGateway
         app.config.spree.payment_methods << Spree::Gateway::Maxipago
         app.config.spree.payment_methods << Spree::Gateway::Migs
         app.config.spree.payment_methods << Spree::Gateway::SpreedlyCoreGateway
-        app.config.spree.payment_methods << Spree::Gateway::PayuLatamGateway
+        if SolidusSupport.solidus_gem_version > Gem::Version.new("1.3.0")
+          app.config.spree.payment_methods << Spree::Gateway::PayuLatamGateway
+        end
     end
 
     # The application_id is a class attribute on all gateways and is used to
