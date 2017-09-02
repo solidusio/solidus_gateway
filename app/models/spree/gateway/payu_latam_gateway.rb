@@ -8,5 +8,15 @@ module Spree
     def provider_class
       ActiveMerchant::Billing::PayuLatamGateway
     end
+
+    if SolidusSupport.solidus_gem_version < Gem::Version.new('2.3.x')
+      def method_type
+        'payu_latam'
+      end
+    else
+      def partial_name
+        'payu_latam'
+      end
+    end
   end
 end
