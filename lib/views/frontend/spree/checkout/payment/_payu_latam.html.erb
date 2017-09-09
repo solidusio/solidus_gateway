@@ -10,7 +10,7 @@
   <% if payment_method.preferred_test_mode %>
     payU.setURL("http://sandbox.api.payulatam.com/payments-api/4.0/service");
   <% end %>
-  payU.setPublicKey("<%= payment_method.preferred_api_login %>");
+  payU.setPublicKey("<%= payment_method.preferred_public_key %>");
   payU.setAccountID("<%= payment_method.preferred_account_id %>");
   payU.setListBoxID("card-list");
   payU.getPaymentMethods();
@@ -24,7 +24,9 @@
       return $('#payuLatamError').show();
     } else {
       var token = response.token;
+      var customerDocument = Spree.payuLatamPaymentMethod.find('.customerDocument').val();
       Spree.payuLatamPaymentMethod.append("<input type='hidden' name='payment_source[" + paymentMethodId + "][gateway_payment_profile_id]' value='" + token + "'/>");
+      Spree.payuLatamPaymentMethod.append("<input type='hidden' name='payment_source[" + paymentMethodId + "][gateway_customer_profile_id]' value='" + customerDocument + "'/>");
       return Spree.payuLatamPaymentMethod.parents("form").get(0).submit();
     }
   }
