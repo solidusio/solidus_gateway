@@ -36,7 +36,6 @@ describe Spree::Gateway::Cardknox do
   end
 
   it 'can purchase' do
-    # binding.pry
     @payment.purchase!
     expect(@payment.state).to eq 'completed'
   end
