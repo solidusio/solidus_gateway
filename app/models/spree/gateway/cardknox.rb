@@ -1,0 +1,18 @@
+module Spree
+    class Gateway::Cardknox < Gateway
+      preference :api_key, :string
+  
+      def provider_class
+        ActiveMerchant::Billing::CardknoxGateway
+      end
+    end
+end
+
+# A hack because ActiveMerchant's CardknoxGateway class returned an error when a paymentmethod was submitted that didn't respond to track_data and manual_entry methods
+# Can be removed when Pull Request #2580 is merged to ActiveMerchant
+
+module AdditionalMethods
+    attr_accessor :track_data, :manual_entry
+end
+
+Spree::CreditCard.include(AdditionalMethods)
