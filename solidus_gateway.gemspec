@@ -43,4 +43,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "capybara-screenshot"
   s.add_development_dependency "poltergeist", "~> 1.9"
   s.add_development_dependency "database_cleaner", "~> 1.5"
+  s.add_development_dependency "ffaker"
 end
