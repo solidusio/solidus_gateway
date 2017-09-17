@@ -43,9 +43,9 @@ describe Spree::Gateway::Cardknox do
       expect(@payment.state).to eq 'completed'
     end
 
-    context '.provider_class' do
+    context '.gateway_class' do
       it 'is a Cardknox gateway' do
-        expect(@gateway.provider_class).to eq ::ActiveMerchant::Billing::CardknoxGateway
+        expect(@gateway.gateway_class).to eq ::ActiveMerchant::Billing::CardknoxGateway
       end
     end
 
