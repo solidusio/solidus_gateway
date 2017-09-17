@@ -1,10 +1,20 @@
 module Spree
     class Gateway::Cardknox < Gateway
       preference :api_key, :string
+
+      def initialize(options)
+      
+        begin
+          super(options)
+        rescue
+          puts "Cardknox is not supported by this version"
+        end
+      end
   
       def provider_class
         ActiveMerchant::Billing::CardknoxGateway
       end
+      
     end
 end
 
