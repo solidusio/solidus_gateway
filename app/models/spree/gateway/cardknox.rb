@@ -7,7 +7,8 @@ module Spree
         begin
           super(options)
         rescue
-          puts "Cardknox is not supported by this version"
+          # If the current version of ActiveMerchant doesn't include the Cardknox gateway
+          puts "Cardknox is not supported by this version of ActiveMerchant"
         end
       end
   
