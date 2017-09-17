@@ -1,5 +1,5 @@
 module Spree
-    class Gateway::Cardknox < Gateway
+    class Gateway::Cardknox < PaymentMethod::CreditCard
       preference :api_key, :string
 
       def initialize(options)
