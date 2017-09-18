@@ -8,7 +8,7 @@
 <script>
   Spree.stripePaymentMethod = $('#payment_method_' + <%= payment_method.id %>);
 
-  var mapCC, stripeResponseHandler;
+  var mapCC, stripeResponseHandler, addStripeField;
 
   mapCC = function(ccType) {
     if (ccType === 'MasterCard') {
@@ -26,8 +26,13 @@
     }
   };
 
+  addStripeField = function(fieldName, fieldValue) {
+    var paymentMethodId = Spree.stripePaymentMethod.prop('id').split("_")[2];
+    Spree.stripePaymentMethod.append("<input type='hidden' class='stripeToken' name='payment_source[" + paymentMethodId + "][" + fieldName + "]' value='" + fieldValue + "'/>");
+  };
+
   stripeResponseHandler = function(status, response) {
-    var paymentMethodId, token;
+    var token;
     if (response.error) {
       $('#stripeError').html(response.error.message);
       return $('#stripeError').show();
@@ -36,11 +41,10 @@
       Spree.stripePaymentMethod.find(".ccType").prop("disabled", false);
       Spree.stripePaymentMethod.find(".ccType").val(mapCC(response.card.brand));
       token = response['id'];
-      paymentMethodId = Spree.stripePaymentMethod.prop('id').split("_")[2];
-      Spree.stripePaymentMethod.append("<input type='hidden' class='stripeToken' name='payment_source[" + paymentMethodId + "][gateway_payment_profile_id]' value='" + token + "'/>");
-      Spree.stripePaymentMethod.append("<input type='hidden' class='stripeToken' name='payment_source[" + paymentMethodId + "][last_digits]' value='" + response.card.last4 + "'/>");
-      Spree.stripePaymentMethod.append("<input type='hidden' class='stripeToken' name='payment_source[" + paymentMethodId + "][month]' value='" + response.card.exp_month + "'/>");
-      Spree.stripePaymentMethod.append("<input type='hidden' class='stripeToken' name='payment_source[" + paymentMethodId + "][year]' value='" + response.card.exp_year + "'/>");
+      addStripeField('gateway_payment_profile_id', token);
+      addStripeField('last_digits', response.card.last4);
+      addStripeField('month', response.card.exp_month);
+      addStripeField('year', response.card.exp_year);
       return Spree.stripePaymentMethod.parents("form").get(0).submit();
     }
   };
