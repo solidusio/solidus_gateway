@@ -30,6 +30,9 @@ RSpec.configure do |config|
   config.mock_with :rspec
 
   config.filter_run focus: true
+  if SolidusSupport.solidus_gem_version < Gem::Version.new("1.3.0")
+    config.filter_run_excluding payu: true
+  end
   config.run_all_when_everything_filtered = true
   config.use_transactional_fixtures = false
 

@@ -1,0 +1,62 @@
+<%= render "spree/checkout/payment/gateway", payment_method: payment_method %>
+<% param_prefix = "payment_source[#{payment_method.id}]" %>
+
+<p class="field">
+  <%= label_tag "document", Spree.t(:document) %><span class="required">*</span><br />
+  <%= text_field_tag "#{param_prefix}[document]", '', id: 'customer_document', class: "required customerDocument", "payu-content": "document" %>
+</p>
+<script type="text/javascript" src="http://gateway.payulatam.com/ppp-web-gateway/javascript/PayU.js"></script>
+<script type="text/javascript">
+  <% if payment_method.preferred_test_mode %>
+    payU.setURL("http://sandbox.api.payulatam.com/payments-api/4.0/service");
+  <% end %>
+  payU.setPublicKey("<%= payment_method.preferred_public_key %>");
+  payU.setAccountID("<%= payment_method.preferred_account_id %>");
+  payU.setListBoxID("card-list");
+  payU.getPaymentMethods();
+
+  var paymentMethodId = "<%= payment_method.id %>";
+  Spree.payuLatamPaymentMethod = $('#payment_method_' + paymentMethodId);
+
+  function responseHandler(response) {
+    if (response.error) {
+      $('#payuLatamError').html(response.error);
+      return $('#payuLatamError').show();
+    } else {
+      var token = response.token;
+      var customerDocument = Spree.payuLatamPaymentMethod.find('.customerDocument').val();
+      Spree.payuLatamPaymentMethod.append("<input type='hidden' name='payment_source[" + paymentMethodId + "][gateway_payment_profile_id]' value='" + token + "'/>");
+      Spree.payuLatamPaymentMethod.append("<input type='hidden' name='payment_source[" + paymentMethodId + "][gateway_customer_profile_id]' value='" + customerDocument + "'/>");
+      return Spree.payuLatamPaymentMethod.parents("form").get(0).submit();
+    }
+  }
+
+  function addHiddenField(value, payuContent) {
+    Spree.payuLatamPaymentMethod.append("<input type='hidden' value='" + value + "' payu-content='"+ payuContent +"'/>");
+  }
+
+  function addPayuAttr(selector, attr) {
+    Spree.payuLatamPaymentMethod.find(selector).attr("payu-content", attr);
+  }
+
+  $(document).ready(function() {
+    Spree.payuLatamPaymentMethod.prepend("<div id='payuLatamError' class='errorExplanation' style='display:none'></div>");
+
+    Spree.payuLatamPaymentMethod.append("<div id='card-list'></div>");
+    addPayuAttr(".cardNumber", "number");
+    var nameCardId = "#name_on_card_" + paymentMethodId;
+    addPayuAttr(nameCardId, "name_card");
+    addPayuAttr(".cardCode", "cvc");
+
+    $("#checkout_form_payment [data-hook=buttons]").click(function(e) {
+      if (Spree.payuLatamPaymentMethod.is(':visible')) {
+        e.preventDefault();
+        var expiration = $(".cardExpiry:visible").payment("cardExpiryVal");
+        addHiddenField(expiration["month"], "exp_month");
+        addHiddenField(expiration["year"], "exp_year");
+        addHiddenField("payerId", "payer_id");
+        payU.createToken(responseHandler, Spree.payuLatamPaymentMethod);
+      }
+    });
+  });
+</script>
