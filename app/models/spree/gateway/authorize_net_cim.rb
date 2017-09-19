@@ -1,11 +1,11 @@
 module Spree
-  class Gateway::AuthorizeNetCim < Gateway
+  class Gateway::AuthorizeNetCim < PaymentMethod::CreditCard
     preference :login, :string
     preference :password, :string
     preference :test_mode, :boolean, :default => false
     preference :validate_on_profile_create, :boolean, :default => false
 
-    def provider_class
+    def gateway_class
       self.class
     end
 

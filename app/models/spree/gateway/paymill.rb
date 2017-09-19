@@ -1,11 +1,11 @@
 module Spree
-  class Gateway::Paymill < Gateway
+  class Gateway::Paymill < PaymentMethod::CreditCard
 
     preference :public_key, :string
     preference :private_key, :string
     preference :currency, :string, :default => 'GBP'
 
-    def provider_class
+    def gateway_class
       ActiveMerchant::Billing::PaymillGateway
     end
   end

@@ -23,7 +23,7 @@ describe Spree::Gateway::PinGateway do
     )
 
     order = create(:order_with_totals, bill_address: address, ship_address: address)
-    order.update!
+    order.recalculate
 
     credit_card = create(:credit_card,
       verification_value: '123',

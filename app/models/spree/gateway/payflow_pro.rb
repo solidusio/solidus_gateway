@@ -1,10 +1,10 @@
 module Spree
-  class Gateway::PayflowPro < Gateway
+  class Gateway::PayflowPro < PaymentMethod::CreditCard
     preference :login, :string
     preference :password, :password
     preference :partner, :string
 
-    def provider_class
+    def gateway_class
       ActiveMerchant::Billing::PayflowGateway
     end
 

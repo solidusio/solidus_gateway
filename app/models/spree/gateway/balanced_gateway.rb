@@ -1,5 +1,5 @@
 module Spree
-  class Gateway::BalancedGateway < Gateway
+  class Gateway::BalancedGateway < PaymentMethod::CreditCard
     preference :login, :string
     preference :on_behalf_of_uri, :string
 
@@ -8,12 +8,12 @@ module Spree
         # The Balanced ActiveMerchant gateway supports passing the token directly as the creditcard parameter
         creditcard = token
       end
-      provider.authorize(money, creditcard, gateway_options)
+      gateway.authorize(money, creditcard, gateway_options)
     end
 
     def capture(authorization, creditcard, gateway_options)
       gateway_options[:on_behalf_of_uri] = self.preferred_on_behalf_of_uri
-      provider.capture((authorization.amount * 100).round, authorization.response_code, gateway_options)
+      gateway.capture((authorization.amount * 100).round, authorization.response_code, gateway_options)
     end
 
     def create_profile(payment)
@@ -23,7 +23,7 @@ module Spree
       options[:email] = payment.order.email
       options[:login] = preferred_login
 
-      card_store_response = provider.store(payment.source, options)
+      card_store_response = gateway.store(payment.source, options)
       card_uri = card_store_response.authorization.split(';').first
 
       # A success just returns a string of the token. A failed request returns a bad request response with a message.
@@ -45,19 +45,19 @@ module Spree
         # The Balanced ActiveMerchant gateway supports passing the token directly as the creditcard parameter
         creditcard = token
       end
-      provider.purchase(money, creditcard, gateway_options)
+      gateway.purchase(money, creditcard, gateway_options)
     end
 
-    def provider_class
+    def gateway_class
       ActiveMerchant::Billing::BalancedGateway
     end
 
     def credit(money, creditcard, response_code, gateway_options)
-      provider.refund(money, response_code, {})
+      gateway.refund(money, response_code, {})
     end
 
     def void(response_code, creditcard, gateway_options)
-      provider.void(response_code)
+      gateway.void(response_code)
     end
 
   end

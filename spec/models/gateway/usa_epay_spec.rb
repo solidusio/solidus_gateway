@@ -21,7 +21,7 @@ describe Spree::Gateway::UsaEpay do
       country:   country)
 
     order = create(:order_with_totals, bill_address: address, ship_address: address)
-    order.update!
+    order.recalculate
 
     credit_card = create(:credit_card,
       verification_value: '123',
@@ -40,9 +40,9 @@ describe Spree::Gateway::UsaEpay do
     end
   end
 
-  context '.provider_class' do
+  context '.gateway_class' do
     it 'is a Worldpay gateway' do
-      expect(@gateway.provider_class).to eq ::ActiveMerchant::Billing::UsaEpayGateway
+      expect(@gateway.gateway_class).to eq ::ActiveMerchant::Billing::UsaEpayGateway
     end
   end
 end

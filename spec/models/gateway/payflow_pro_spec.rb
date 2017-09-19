@@ -3,9 +3,9 @@ require 'spec_helper'
 describe Spree::Gateway::PayflowPro do
   let(:gateway) { described_class.create!(name: 'PayflowPro') }
 
-  context '.provider_class' do
+  context '.gateway_class' do
     it 'is a Payflow gateway' do
-      expect(gateway.provider_class).to eq ::ActiveMerchant::Billing::PayflowGateway
+      expect(gateway.gateway_class).to eq ::ActiveMerchant::Billing::PayflowGateway
     end
   end
 

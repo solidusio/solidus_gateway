@@ -1,5 +1,5 @@
 module Spree
-  class Gateway::Eway < Gateway
+  class Gateway::Eway < PaymentMethod::CreditCard
     preference :login, :string
 
     # Note: EWay supports purchase method only (no authorize method).
@@ -7,7 +7,7 @@ module Spree
       true
     end
 
-    def provider_class
+    def gateway_class
       ActiveMerchant::Billing::EwayGateway
     end
 

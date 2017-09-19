@@ -1,9 +1,9 @@
 module Spree
-  class Gateway::PayJunction < Gateway
+  class Gateway::PayJunction < PaymentMethod::CreditCard
     preference :login, :string
     preference :password, :string
 
-    def provider_class
+    def gateway_class
       ActiveMerchant::Billing::PayJunctionGateway
     end
 

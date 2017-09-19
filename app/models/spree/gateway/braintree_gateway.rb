@@ -1,5 +1,5 @@
 module Spree
-  class Gateway::BraintreeGateway < Gateway
+  class Gateway::BraintreeGateway < PaymentMethod::CreditCard
     preference :environment, :string
     preference :merchant_id, :string
     preference :merchant_account_id, :string
@@ -20,18 +20,18 @@ module Spree
       'Visa' => 'visa'
     }
 
-    def provider
-      provider_instance = super
+    def gateway
+      gateway_instance = super
       Braintree::Configuration.custom_user_agent = "solidus_gateway #{SolidusGateway::VERSION}"
       Braintree::Configuration.environment = preferred_environment.to_sym
       Braintree::Configuration.merchant_id = preferred_merchant_id
       Braintree::Configuration.public_key = preferred_public_key
       Braintree::Configuration.private_key = preferred_private_key
 
-      provider_instance
+      gateway_instance
     end
 
-    def provider_class
+    def gateway_class
       ActiveMerchant::Billing::BraintreeBlueGateway
     end
 
@@ -45,16 +45,16 @@ module Spree
         payment_method = creditcard.gateway_customer_profile_id || creditcard
       end
 
-      provider.authorize(money, payment_method, options)
+      gateway.authorize(money, payment_method, options)
     end
 
     def capture(amount, authorization_code, ignored_options = {})
-      provider.capture(amount, authorization_code)
+      gateway.capture(amount, authorization_code)
     end
 
     def create_profile(payment)
       if payment.source.gateway_customer_profile_id.nil?
-        response = provider.store(payment.source, options_for_payment(payment))
+        response = gateway.store(payment.source, options_for_payment(payment))
 
         if response.success?
           payment.source.update_attributes!(:gateway_customer_profile_id => response.params['customer_vault_id'])
@@ -88,16 +88,16 @@ module Spree
 
     # Braintree now disables credits by default, see https://www.braintreepayments.com/docs/ruby/transactions/credit
     def credit_with_payment_profiles(amount, payment, response_code, option)
-      provider.credit(amount, payment)
+      gateway.credit(amount, payment)
     end
 
     def credit_without_payment_profiles(amount, response_code, options)
-      provider # braintree provider needs to be called here to properly configure braintree gem.
+      gateway # braintree provider needs to be called here to properly configure braintree gem.
       transaction = ::Braintree::Transaction.find(response_code)
       if BigDecimal.new(amount.to_s) == (transaction.amount * 100)
-        provider.refund(response_code)
+        gateway.refund(response_code)
       elsif BigDecimal.new(amount.to_s) < (transaction.amount * 100) # support partial refunds
-        provider.refund(amount, response_code)
+        gateway.refund(amount, response_code)
       else
         raise NotImplementedError
       end
@@ -112,7 +112,7 @@ module Spree
     end
 
     def void(response_code, *ignored_options)
-      provider.void(response_code)
+      gateway.void(response_code)
     end
 
     def options
@@ -126,15 +126,15 @@ module Spree
     end
 
     def cancel(response_code)
-      provider
+      gateway
       transaction = ::Braintree::Transaction.find(response_code)
       # From: https://www.braintreepayments.com/docs/ruby/transactions/refund
       # "A transaction can be refunded if its status is settled or settling.
       # If the transaction has not yet begun settlement, it should be voided instead of refunded.
       if transaction.status == Braintree::Transaction::Status::SubmittedForSettlement
-        provider.void(response_code)
+        gateway.void(response_code)
       else
-        provider.refund(response_code)
+        gateway.refund(response_code)
       end
     end
 

@@ -1,11 +1,11 @@
 module Spree
-  class Gateway::Beanstream < Gateway
+  class Gateway::Beanstream < PaymentMethod::CreditCard
     preference :login, :string
     preference :user, :string
     preference :password, :string
     preference :secure_profile_api_key, :string
 
-    def provider_class
+    def gateway_class
       ActiveMerchant::Billing::BeanstreamGateway
     end
 
@@ -18,7 +18,7 @@ module Spree
       if creditcard.gateway_customer_profile_id.nil?
         options = options_for_create_customer_profile(creditcard, {})
         verify_creditcard_name!(creditcard)
-        result = provider.store(creditcard, options)
+        result = gateway.store(creditcard, options)
         if result.success?
           creditcard.update_attributes(:gateway_customer_profile_id => result.params['customerCode'], :gateway_payment_profile_id => result.params['customer_vault_id'])
         else

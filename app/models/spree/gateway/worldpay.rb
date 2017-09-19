@@ -1,5 +1,5 @@
 module Spree
-  class Gateway::Worldpay < Gateway
+  class Gateway::Worldpay < PaymentMethod::CreditCard
     preference :login, :string
     preference :password, :string
     preference :currency, :string, :default => 'GBP'
@@ -12,28 +12,28 @@ module Spree
     preference :maestro_login, :string
     preference :visa_login, :string
 
-    def provider_class
+    def gateway_class
       ActiveMerchant::Billing::WorldpayGateway
     end
 
     def purchase(money, credit_card, options = {})
-      provider = credit_card_provider(credit_card, options)
-      provider.purchase(money, credit_card, options)
+      gateway = credit_card_provider(credit_card, options)
+      gateway.purchase(money, credit_card, options)
     end
 
     def authorize(money, credit_card, options = {})
-      provider = credit_card_provider(credit_card, options)
-      provider.authorize(money, credit_card, options)
+      gateway = credit_card_provider(credit_card, options)
+      gateway.authorize(money, credit_card, options)
     end
 
     def capture(money, authorization, options = {})
-      provider = credit_card_provider(auth_credit_card(authorization), options)
-      provider.capture(money, authorization, options)
+      gateway = credit_card_provider(auth_credit_card(authorization), options)
+      gateway.capture(money, authorization, options)
     end
 
     def refund(money, authorization, options = {})
-      provider = credit_card_provider(auth_credit_card(authorization), options)
-      provider.refund(money, authorization, options)
+      gateway = credit_card_provider(auth_credit_card(authorization), options)
+      gateway.refund(money, authorization, options)
     end
 
     def credit(money, authorization, options = {})
@@ -41,8 +41,8 @@ module Spree
     end
 
     def void(authorization, options = {})
-      provider = credit_card_provider(auth_credit_card(authorization), options)
-      provider.void(authorization, options)
+      gateway = credit_card_provider(auth_credit_card(authorization), options)
+      gateway.void(authorization, options)
     end
 
     private
@@ -62,7 +62,7 @@ module Spree
       gateway_options[:currency] = self.preferred_currency
       gateway_options[:inst_id] = self.preferred_installation_id
       ActiveMerchant::Billing::Base.gateway_mode = gateway_options[:server].to_sym
-      @provider = provider_class.new(gateway_options)
+      @gateway = gateway_class.new(gateway_options)
     end
 
     def login_for_card(card)

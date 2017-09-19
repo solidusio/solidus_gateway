@@ -1,10 +1,10 @@
 module Spree
-  class Gateway::SagePay < Gateway
+  class Gateway::SagePay < PaymentMethod::CreditCard
     preference :login, :string
     preference :password, :string
     preference :account, :string
 
-    def provider_class
+    def gateway_class
       ActiveMerchant::Billing::SagePayGateway
     end
   end

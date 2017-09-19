@@ -1,9 +1,9 @@
 module Spree
-  class Gateway::AuthorizeNet < Gateway
+  class Gateway::AuthorizeNet < PaymentMethod::CreditCard
     preference :login, :string
     preference :password, :string
 
-    def provider_class
+    def gateway_class
       ActiveMerchant::Billing::AuthorizeNetGateway
     end
 

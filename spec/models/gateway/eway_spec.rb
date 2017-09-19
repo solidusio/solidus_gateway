@@ -3,9 +3,9 @@ require 'spec_helper'
 describe Spree::Gateway::Eway do
   let(:gateway) { described_class.create!(name: 'Eway') }
 
-  context '.provider_class' do
+  context '.gateway_class' do
     it 'is a Eway gateway' do
-      expect(gateway.provider_class).to eq ::ActiveMerchant::Billing::EwayGateway
+      expect(gateway.gateway_class).to eq ::ActiveMerchant::Billing::EwayGateway
     end
   end
 

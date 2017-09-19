@@ -1,9 +1,9 @@
 module Spree
-  class Gateway::PinGateway < Gateway
+  class Gateway::PinGateway < PaymentMethod::CreditCard
     preference :api_key, :string
     preference :currency, :string, :default => 'AUD'
 
-    def provider_class
+    def gateway_class
       ActiveMerchant::Billing::PinGateway
     end
     
@@ -13,7 +13,7 @@ module Spree
     
     def create_profile(payment)
       if payment.source.gateway_customer_profile_id.nil?
-        response = provider.store(payment.source, options_for_payment(payment))
+        response = gateway.store(payment.source, options_for_payment(payment))
         
         if response.success?
           payment.source.update_attributes!(:gateway_customer_profile_id => response.authorization)
