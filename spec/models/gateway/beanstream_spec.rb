@@ -3,9 +3,9 @@ require 'spec_helper'
 describe Spree::Gateway::Beanstream do
   let(:gateway) { described_class.create!(name: 'Beanstream') }
 
-  context '.provider_class' do
+  context '.gateway_class' do
     it 'is a Beanstream gateway' do
-      expect(gateway.provider_class).to eq ::ActiveMerchant::Billing::BeanstreamGateway
+      expect(gateway.gateway_class).to eq ::ActiveMerchant::Billing::BeanstreamGateway
     end
   end
 

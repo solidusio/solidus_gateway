@@ -40,9 +40,9 @@ describe Spree::Gateway::UsaEpay do
     end
   end
 
-  context '.provider_class' do
+  context '.gateway_class' do
     it 'is a Worldpay gateway' do
-      expect(@gateway.provider_class).to eq ::ActiveMerchant::Billing::UsaEpayGateway
+      expect(@gateway.gateway_class).to eq ::ActiveMerchant::Billing::UsaEpayGateway
     end
   end
 end

@@ -9,12 +9,12 @@ describe Spree::Gateway::Linkpoint do
   let(:options) { { subtotal: 3, discount: -1 } }
 
   before do
-    allow(gateway.provider_class).to receive_messages(new: provider)
+    allow(gateway.gateway_class).to receive_messages(new: provider)
   end
 
-  context '.provider_class' do
+  context '.gateway_class' do
     it 'is a Linkpoint gateway' do
-      expect(gateway.provider_class).to eq ::ActiveMerchant::Billing::LinkpointGateway
+      expect(gateway.gateway_class).to eq ::ActiveMerchant::Billing::LinkpointGateway
     end
   end
 

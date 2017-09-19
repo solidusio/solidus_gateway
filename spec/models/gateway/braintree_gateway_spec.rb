@@ -158,9 +158,9 @@ describe Spree::Gateway::BraintreeGateway do
     end
   end
 
-  context '.provider_class' do
+  context '.gateway_class' do
     it 'is a BraintreeBlue gateway' do
-      expect(@gateway.provider_class).to eq ::ActiveMerchant::Billing::BraintreeBlueGateway
+      expect(@gateway.gateway_class).to eq ::ActiveMerchant::Billing::BraintreeBlueGateway
     end
   end
 
@@ -426,7 +426,7 @@ describe Spree::Gateway::BraintreeGateway do
     end
     yield
   ensure
-    Spree::Gateway::BraintreeGateway.class_eval do
+   Spree::Gateway::BraintreeGateway.class_eval do
       def payment_profiles_supported?
         true
       end

@@ -3,9 +3,9 @@ require 'spec_helper'
 describe Spree::Gateway::AuthorizeNetCim do
   let (:gateway) { described_class.new }
 
-  context '.provider_class' do
+  context '.gateway_class' do
     it 'is a AuthorizeNetCim gateway' do
-      expect(gateway.provider_class).to eq ::Spree::Gateway::AuthorizeNetCim
+      expect(gateway.gateway_class).to eq ::Spree::Gateway::AuthorizeNetCim
     end
   end
 

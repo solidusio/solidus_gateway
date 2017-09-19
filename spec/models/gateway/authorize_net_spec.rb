@@ -3,9 +3,9 @@ require 'spec_helper'
 describe Spree::Gateway::AuthorizeNet do
   let (:gateway) { described_class.create!(name: 'Authorize.net') }
 
-  context '.provider_class' do
+  context '.gateway_class' do
     it 'is a AuthorizeNet gateway' do
-      expect(gateway.provider_class).to eq ::ActiveMerchant::Billing::AuthorizeNetGateway
+      expect(gateway.gateway_class).to eq ::ActiveMerchant::Billing::AuthorizeNetGateway
     end
   end
 
