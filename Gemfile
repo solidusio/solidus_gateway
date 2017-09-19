@@ -13,6 +13,7 @@ gem 'mysql2'
 group :development, :test do
   gem "pry-rails"
   gem "ffaker"
+  gem "culqi-ruby"
 end
 
 gemspec

@@ -1,0 +1,79 @@
+<%= render "spree/checkout/payment/gateway", payment_method: payment_method %>
+<% param_prefix = "payment_source[#{payment_method.id}]" %>
+
+<p class="field installmentField">
+  <%= label_tag "installments", Spree.t(:installments) %><span class="required">*</span><br />
+  <%= select_tag "#{param_prefix}[gateway_customer_profile_id]", [], class: "culqiInstallments" %>
+</p>
+
+<script type="text/javascript" src="https://checkout.culqi.com/v2"></script>
+<script type="text/javascript">
+  Culqi.publicKey = "<%= payment_method.preferred_public_key %>";
+  Culqi.useClasses = true;
+  Culqi.init();
+
+  var paymentMethodId = "<%= payment_method.id %>";
+  Spree.culqiPaymentMethod = $('#payment_method_' + paymentMethodId);
+  $('.installmentField').toggle();
+
+  function addCulqiField(className, value) {
+    Spree.culqiPaymentMethod.append("<input type='hidden' value='" + value + "' class='"+ className +"'/>");
+  }
+
+  function addCulqiSelectOptions(className, options) {
+    var select = Spree.culqiPaymentMethod.find(className);
+    for(var i=0; i < options.length; i++) {
+      select.append("<option value='" + options[i] + "'>" + options[i] + "</option");
+    }
+    $('.installmentField').toggle();
+  }
+
+  function goToNextStep() {
+    Spree.culqiPaymentMethod.parents("form").get(0).submit();
+  }
+
+  function allowedInstallments(token) {
+    var installments = token['iin']['installments_allowed'];
+    var submitBtn = $('#checkout_form_payment [data-hook=buttons]');
+    if (installments.length > 0) {
+      (installments.indexOf(0) !== -1)  ? null : installments.unshift(0);
+      Spree.culqiPaymentMethod.find('#card_number, #card_expiry, #card_code').prop("disabled", true);
+      addCulqiSelectOptions('.culqiInstallments', installments);
+      submitBtn.off('click');
+      submitBtn.click(function(e) {
+        e.preventDefault();
+        goToNextStep();
+      });
+    } else {
+      goToNextStep();
+    }
+  }
+
+  function culqi() {
+    if (Culqi.token) {
+      Spree.culqiPaymentMethod.append("<input type='hidden' name='<%= param_prefix %>[gateway_payment_profile_id]' value='" + Culqi.token['id'] + "'/>");
+      allowedInstallments(Culqi.token)
+    } else if (Culqi.error) {
+      $('#culqiError').html(Culqi.error['user_message']);
+      return $('#culqiError').show();
+    }
+  }
+
+  Spree.culqiPaymentMethod.find('.cardCode').addClass('culqi-cvv');
+
+  $(document).ready(function() {
+    Spree.culqiPaymentMethod.prepend("<div id='culqiError' class='errorExplanation' style='display:none'></div>");
+    $('#checkout_form_payment [data-hook=buttons]').click(function(e) {
+      if (Spree.culqiPaymentMethod.is(':visible')) {
+        e.preventDefault();
+        var expiration = $('.cardExpiry:visible').payment('cardExpiryVal');
+        var cardNumber = Spree.culqiPaymentMethod.find('.cardNumber').val().replace(/ /g,'')
+        addCulqiField('culqi-email', '<%= @order.email %>');
+        addCulqiField('culqi-expm', expiration['month']);
+        addCulqiField('culqi-expy', expiration['year']);
+        addCulqiField('culqi-card', cardNumber);
+        Culqi.createToken();
+      }
+    });
+  });
+</script>
