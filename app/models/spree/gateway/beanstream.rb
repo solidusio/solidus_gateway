@@ -1,5 +1,5 @@
 module Spree
-  class Gateway::Beanstream < Gateway
+  class Gateway::Beanstream < PaymentMethod::CreditCard
     preference :login, :string
     preference :user, :string
     preference :password, :string

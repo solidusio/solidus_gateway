@@ -9,6 +9,7 @@ end
 
 gem 'pg'
 gem 'mysql2'
+gem 'ffaker'
 
 group :development, :test do
   gem "pry-rails"

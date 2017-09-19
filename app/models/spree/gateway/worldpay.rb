@@ -1,5 +1,5 @@
 module Spree
-  class Gateway::Worldpay < Gateway
+  class Gateway::Worldpay < PaymentMethod::CreditCard
     preference :login, :string
     preference :password, :string
     preference :currency, :string, :default => 'GBP'

@@ -1,5 +1,5 @@
 module Spree
-  class Gateway::Paymill < Gateway
+  class Gateway::Paymill < PaymentMethod::CreditCard
 
     preference :public_key, :string
     preference :private_key, :string

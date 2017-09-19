@@ -1,5 +1,5 @@
 module Spree
-  class Gateway::PinGateway < Gateway
+  class Gateway::PinGateway < PaymentMethod::CreditCard
     preference :api_key, :string
     preference :currency, :string, :default => 'AUD'
 

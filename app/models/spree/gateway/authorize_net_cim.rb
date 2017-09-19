@@ -1,5 +1,5 @@
 module Spree
-  class Gateway::AuthorizeNetCim < Gateway
+  class Gateway::AuthorizeNetCim < PaymentMethod::CreditCard
     preference :login, :string
     preference :password, :string
     preference :test_mode, :boolean, :default => false

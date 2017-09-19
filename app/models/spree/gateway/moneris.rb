@@ -1,5 +1,5 @@
 module Spree
-  class Gateway::Moneris < Gateway
+  class Gateway::Moneris < PaymentMethod::CreditCard
     preference :login, :string
     preference :password, :password
 

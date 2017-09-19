@@ -1,5 +1,5 @@
 module Spree
-  class Gateway::BalancedGateway < Gateway
+  class Gateway::BalancedGateway < PaymentMethod::CreditCard
     preference :login, :string
     preference :on_behalf_of_uri, :string
 

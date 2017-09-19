@@ -1,5 +1,5 @@
 module Spree
-  class Gateway::SecurePayAU < Gateway
+  class Gateway::SecurePayAU < PaymentMethod::CreditCard
     preference :login, :string
     preference :password, :string
 

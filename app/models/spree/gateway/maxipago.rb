@@ -1,5 +1,5 @@
 module Spree
-  class Gateway::Maxipago < Gateway
+  class Gateway::Maxipago < PaymentMethod::CreditCard
     preference :login, :string # ID
     preference :password, :string # KEY
 

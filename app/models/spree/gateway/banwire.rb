@@ -1,5 +1,5 @@
 module Spree
-  class Gateway::Banwire < Gateway
+  class Gateway::Banwire < PaymentMethod::CreditCard
     preference :login, :string
 
 

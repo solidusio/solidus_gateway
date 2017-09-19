@@ -1,5 +1,5 @@
 module Spree
-  class Gateway::PayflowPro < Gateway
+  class Gateway::PayflowPro < PaymentMethod::CreditCard
     preference :login, :string
     preference :password, :password
     preference :partner, :string

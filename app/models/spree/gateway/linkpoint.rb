@@ -1,5 +1,5 @@
 module Spree
-  class Gateway::Linkpoint < Gateway
+  class Gateway::Linkpoint < PaymentMethod::CreditCard
     preference :login, :string
     preference :pem, :text
 

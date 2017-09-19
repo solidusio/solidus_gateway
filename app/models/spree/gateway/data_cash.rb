@@ -1,5 +1,5 @@
 module Spree
-  class Gateway::DataCash < Gateway
+  class Gateway::DataCash < PaymentMethod::CreditCard
     preference :login, :string
     preference :password, :string
 
