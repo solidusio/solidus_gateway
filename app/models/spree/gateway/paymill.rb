@@ -5,7 +5,7 @@ module Spree
     preference :private_key, :string
     preference :currency, :string, :default => 'GBP'
 
-    def provider_class
+    def gateway_class
       ActiveMerchant::Billing::PaymillGateway
     end
   end

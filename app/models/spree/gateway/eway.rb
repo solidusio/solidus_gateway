@@ -7,7 +7,7 @@ module Spree
       true
     end
 
-    def provider_class
+    def gateway_class
       ActiveMerchant::Billing::EwayGateway
     end
 

@@ -3,7 +3,7 @@ module Spree
     preference :login, :string
     preference :password, :password
 
-    def provider_class
+    def gateway_class
       ActiveMerchant::Billing::MonerisGateway
     end
   end

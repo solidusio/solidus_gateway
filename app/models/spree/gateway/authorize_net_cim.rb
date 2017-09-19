@@ -5,7 +5,7 @@ module Spree
     preference :test_mode, :boolean, :default => false
     preference :validate_on_profile_create, :boolean, :default => false
 
-    def provider_class
+    def gateway_class
       self.class
     end
 

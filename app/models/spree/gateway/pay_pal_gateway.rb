@@ -5,7 +5,7 @@ module Spree
     preference :signature, :string
     preference :currency_code, :string
 
-    def provider_class
+    def gateway_class
       ActiveMerchant::Billing::PaypalGateway
     end
   end

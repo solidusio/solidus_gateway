@@ -3,7 +3,7 @@ module Spree
     preference :login, :string # ID
     preference :password, :string # KEY
 
-    def provider_class
+    def gateway_class
       ActiveMerchant::Billing::MaxipagoGateway
     end
 

@@ -3,7 +3,7 @@ module Spree
     preference :login, :string
     preference :password, :string
 
-    def provider_class
+    def gateway_class
       ActiveMerchant::Billing::PayJunctionGateway
     end
 

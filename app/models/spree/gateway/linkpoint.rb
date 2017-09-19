@@ -3,14 +3,14 @@ module Spree
     preference :login, :string
     preference :pem, :text
 
-    def provider_class
+    def gateway_class
       ActiveMerchant::Billing::LinkpointGateway
     end
 
     [:authorize, :purchase, :capture, :void, :credit].each do |method|
       define_method(method) do |*args|
         options = add_discount_to_subtotal(args.extract_options!)
-        provider.public_send(method, *args << options)
+        gateway.public_send(method, *args << options)
       end
     end
 

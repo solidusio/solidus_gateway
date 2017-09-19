@@ -3,7 +3,7 @@ module Spree
     preference :login, :string
     preference :password, :string
     preference :gateway_token, :string
-    def provider_class
+    def gateway_class
       ActiveMerchant::Billing::SpreedlyCoreGateway
     end
   end

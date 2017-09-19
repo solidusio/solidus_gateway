@@ -4,7 +4,7 @@ module Spree
     preference :password, :string
     preference :secure_hash, :string
 
-    def provider_class
+    def gateway_class
       ActiveMerchant::Billing::MigsGateway
     end
   end

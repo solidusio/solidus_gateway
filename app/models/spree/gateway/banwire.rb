@@ -3,13 +3,13 @@ module Spree
     preference :login, :string
 
 
-    def provider_class
+    def gateway_class
       ActiveMerchant::Billing::BanwireGateway
     end
 
     def purchase(money, creditcard, gateway_options)
       gateway_options[:description] = "Spree Order"
-      provider.purchase(money, creditcard, gateway_options)
+      gateway.purchase(money, creditcard, gateway_options)
     end
   end
 end

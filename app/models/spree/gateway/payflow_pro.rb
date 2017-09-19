@@ -4,7 +4,7 @@ module Spree
     preference :password, :password
     preference :partner, :string
 
-    def provider_class
+    def gateway_class
       ActiveMerchant::Billing::PayflowGateway
     end
 
