@@ -30,7 +30,7 @@ describe Spree::Gateway::BraintreeGateway do
       )
 
       order = create(:order_with_totals, bill_address: address, ship_address: address)
-      order.update!
+      order.recalculate
 
       # Use a valid CC from braintree sandbox: https://www.braintreepayments.com/docs/ruby/reference/sandbox
 
