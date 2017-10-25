@@ -19,5 +19,5 @@ RSpec.configure do |config|
     Braintree::Configuration.logger = Logger.new("spec/dummy/tmp/log")
   end
 
-  FactoryGirl.find_definitions
+  FactoryBot.find_definitions
 end

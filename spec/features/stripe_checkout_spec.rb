@@ -2,12 +2,12 @@ require 'spec_helper'
 
 RSpec.describe "Stripe checkout", type: :feature do
   before do
-    FactoryGirl.create(:store)
+    FactoryBot.create(:store)
     # Set up a zone
-    zone = FactoryGirl.create(:zone)
-    country = FactoryGirl.create(:country)
+    zone = FactoryBot.create(:zone)
+    country = FactoryBot.create(:country)
     zone.members << Spree::ZoneMember.create!(zoneable: country)
-    FactoryGirl.create(:free_shipping_method)
+    FactoryBot.create(:free_shipping_method)
 
     Spree::Gateway::StripeGateway.create!(
       name: "Stripe",
@@ -15,7 +15,7 @@ RSpec.describe "Stripe checkout", type: :feature do
       preferred_publishable_key: "pk_test_Cuf0PNtiAkkMpTVC2gwYDMIg",
     )
 
-    FactoryGirl.create(:product, name: "DL-44")
+    FactoryBot.create(:product, name: "DL-44")
 
     visit spree.root_path
     click_link "DL-44"

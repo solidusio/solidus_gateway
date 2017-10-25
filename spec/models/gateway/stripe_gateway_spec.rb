@@ -161,11 +161,11 @@ describe Spree::Gateway::StripeGateway do
       gateway
     end
 
-    let!(:store) { FactoryGirl.create(:store) }
+    let!(:store) { FactoryBot.create(:store) }
     let(:order) { Spree::Order.create! }
 
     let(:card) do
-      FactoryGirl.create(
+      FactoryBot.create(
         :credit_card,
         gateway_customer_profile_id: 'cus_abcde',
         imported: false
