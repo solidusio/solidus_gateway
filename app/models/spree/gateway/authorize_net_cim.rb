@@ -1,3 +1,5 @@
+require 'active_merchant/billing/gateways/authorize_net_cim'
+
 module Spree
   class Gateway::AuthorizeNetCim < Gateway
     preference :login, :string

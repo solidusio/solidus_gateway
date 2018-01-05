@@ -1,3 +1,5 @@
+require 'active_merchant/billing/gateways/linkpoint'
+
 module Spree
   class Gateway::Linkpoint < Gateway
     preference :login, :string

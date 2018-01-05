@@ -1,3 +1,5 @@
+require 'active_merchant/billing/gateways/pin'
+
 module Spree
   class Gateway::PinGateway < Gateway
     preference :api_key, :string

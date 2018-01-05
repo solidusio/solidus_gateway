@@ -1,3 +1,5 @@
+require 'active_merchant/billing/gateways/authorize_net'
+
 module Spree
   class Gateway::AuthorizeNet < Gateway
     preference :login, :string

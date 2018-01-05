@@ -1,3 +1,6 @@
+require 'active_merchant/billing/gateways/beanstream/beanstream_core'
+require 'active_merchant/billing/gateways/beanstream'
+
 module Spree
   class Gateway::Beanstream < Gateway
     preference :login, :string

@@ -1,3 +1,5 @@
+require 'active_merchant/billing/gateways/data_cash'
+
 module Spree
   class Gateway::DataCash < Gateway
     preference :login, :string
