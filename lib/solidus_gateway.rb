@@ -1,5 +1,11 @@
 require "solidus_core"
 require "solidus_support"
+require 'active_merchant/empty'
+require 'active_merchant/network_connection_retries'
+require 'active_merchant/connection'
+require 'active_merchant/posts_data'
+require 'active_merchant/country'
+require 'active_merchant/billing/gateway'
 require "spree_gateway/engine"
 require "solidus_gateway/version"
 require "sass/rails"

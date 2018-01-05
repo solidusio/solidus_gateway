@@ -1,3 +1,5 @@
+require 'active_merchant/billing/gateways/braintree_blue'
+
 module Spree
   class Gateway::BraintreeGateway < Gateway
     preference :environment, :string

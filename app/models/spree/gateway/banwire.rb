@@ -1,3 +1,5 @@
+require 'active_merchant/billing/gateways/banwire'
+
 module Spree
   class Gateway::Banwire < Gateway
     preference :login, :string
