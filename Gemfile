@@ -7,7 +7,7 @@ if branch == 'master' || branch >= "v2.0"
   gem "rails-controller-testing", group: :test
 end
 
-gem 'pg'
+gem 'pg', '~> 0.21'
 gem 'mysql2'
 
 group :development, :test do
