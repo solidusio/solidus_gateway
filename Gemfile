@@ -10,6 +10,8 @@ end
 gem 'pg', '~> 0.21'
 gem 'mysql2'
 
+gem 'chromedriver-helper' if ENV['CI']
+
 group :development, :test do
   gem "pry-rails"
   gem "ffaker"
