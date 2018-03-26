@@ -8,7 +8,7 @@ if branch == 'master' || branch >= "v2.0"
 end
 
 gem 'pg', '~> 0.21'
-gem 'mysql2'
+gem 'mysql2', '~> 0.4.10'
 
 gem 'chromedriver-helper' if ENV['CI']
 
