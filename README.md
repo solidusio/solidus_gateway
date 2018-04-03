@@ -33,6 +33,12 @@ In your Gemfile:
 gem "solidus_gateway"
 ```
 
+If you are running Solidus >= 2.5.x, you'll need the git reference in your Gemfile to ensure `master` is used:
+
+```ruby
+gem "solidus_gateway", git: 'https://github.com/solidusio/solidus_gateway.git'
+```
+
 Then run from the command line:
 
 ```shell
