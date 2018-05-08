@@ -37,7 +37,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "simplecov"
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "factory_bot", "~> 4.4"
-  s.add_development_dependency "capybara"
+  s.add_development_dependency "capybara", "~> 2.18"
   s.add_development_dependency "capybara-screenshot"
   s.add_development_dependency "poltergeist", "~> 1.9"
   s.add_development_dependency "selenium-webdriver"
