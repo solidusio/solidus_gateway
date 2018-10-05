@@ -16,14 +16,23 @@ else
   gem "rails", "~> 4.2.10"
 end
 
-gem 'pg', '~> 0.21'
-gem 'mysql2', '~> 0.4.10'
+if ENV['DB'] == 'mysql'
+  gem 'mysql2', '~> 0.4.10'
+else
+  gem 'pg', '~> 0.21'
+end
 
 gem 'chromedriver-helper' if ENV['CI']
 
 group :development, :test do
   gem "pry-rails"
   gem "ffaker"
+
+  if branch < "v2.5"
+    gem 'factory_bot', '4.10.0'
+  else
+    gem 'factory_bot', '> 4.10.0'
+  end
 end
 
 gemspec
