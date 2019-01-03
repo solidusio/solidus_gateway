@@ -16,7 +16,8 @@ For **new stores we strongly recommend** using one of these payment provider ext
 
 * [`solidus_braintree_paypal`](https://github.com/solidusio/solidus_paypal_braintree) for Braintree provided payment methods like PayPal, Apple Pay and credit cards
 * [`solidus_adyen`](https://github.com/StemboltHQ/solidus-adyen) for Adyen provided payment methods
-* [`solidus_affirm`](https://github.com/StemboltHQ/solidus_affirm) for Affirm provided payment methods
+* [`solidus_affirm`](https://github.com/solidusio-contrib/solidus_affirm) for Affirm provided payment methods
+* [`solidus_stripe`](https://github.com/solidusio-contrib/solidus_stripe) for Stripe provided payment methods
 * [`solidus_klarna_payments`](https://github.com/bitspire/solidus_klarna_payments)
 * [`solidus_paybright`](https://github.com/StemboltHQ/solidus_paybright)
 
