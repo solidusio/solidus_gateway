@@ -49,5 +49,9 @@ module SpreeGateway
     if SolidusSupport.frontend_available?
       paths["app/views"] << "lib/views/frontend"
     end
+
+    if SolidusSupport.api_available?
+      paths["app/views"] << "lib/views/api"
+    end
   end
 end
