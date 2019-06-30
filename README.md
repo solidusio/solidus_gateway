@@ -2,9 +2,9 @@ Solidus Gateway
 ===============
 Community supported Solidus Payment Methods. It works as a wrapper for
 active_merchant gateways. Note that for some gateways you might still need to
-add another gem to your Gemfile to make it work. For example active_merchant
-require `braintree` but it doesn't include that gem on its gemspec. So you
-need to manually add it to your rails app Gemfile.
+add another gem to your Gemfile to make it work. For example, active_merchant
+requires `braintree` but it doesn't include that gem on its gemspec. So you
+need to add it to your rails app Gemfile manually.
 
 ---
 
@@ -23,7 +23,7 @@ For **new stores we strongly recommend** using one of these payment provider ext
 
 Although we will keep supporting Bug fixes for existing payment methods we **will not accept new payment methods** to be included in this gem.
 
-Please create your own extension for new payment methods. Take one of the above examples as starting point for your extension.
+Please create your own extension for new payment methods. Take one of the above examples as a starting point for your extension.
 
 Installation
 ------------
@@ -49,7 +49,7 @@ to change the provider, and you should see a number of options under the provide
 Testing
 -------
 
-Then just run the following to automatically build a dummy app if necessary and
+Then just run the following to build a dummy app if necessary and automatically
 run the tests:
 
 ```shell
